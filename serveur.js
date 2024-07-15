@@ -1,19 +1,22 @@
-const express = require('express')
+// Import des modules nécessaires
+const express = require('express');
+const userRoute = require('./routes/user'); // Import de votre route utilisateur
+require('./config/connect');
+const cors = require('cors');
+ // Import de votre configuration de connexion
 
+// Initialisation de l'application Express
+const app = express();
 
-const productRoute = require('./routes/product')
-const userRoute = require('./routes/user')
-
-require('./config/connect')
-const app = express()
-
+// Middleware pour parser les requêtes JSON
 app.use(express.json());
+app.use(cors());
 
-app.use('/product',productRoute)
-app.use('/user',userRoute)
+// Middleware pour utiliser la route utilisateur à l'URL '/user'
+app.use('/user', userRoute);
 
-app.use('/getimage/',express.static('./uploads'))
-
-app.listen(3000,()=>{
-    console.log('server work')
+// Écoute du serveur sur le port 4000
+const PORT = 4000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
